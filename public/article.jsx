@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import request from 'superagent';
 
 export default class Article extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ export default class Article extends Component {
   }
 
   render() {
-    return <form>
+    return <div>
       <div>
         <input type="text" placeholder="title"
                value={this.state.title}
@@ -22,9 +23,9 @@ export default class Article extends Component {
                   onChange={this._onContentChange.bind(this)}/>
       </div>
       <div>
-        <button>提交</button>
+        <button type="submit" onClick={this._onSubmit.bind(this)}>提交</button>
       </div>
-    </form>
+    </div>
   }
 
   _onTitleChange(event) {
@@ -37,6 +38,19 @@ export default class Article extends Component {
     this.setState({
       content: event.target.value
     });
+  }
+
+  _onSubmit() {
+    alert('xx');
+    request.post('/api/article')
+      .send({
+        title: this.state.title,
+        content: this.state.content
+      })
+      .end((err, res) => {
+        if (err) return console.err(err);
+        console.log(res.statusCode);
+      })
   }
 
 }
