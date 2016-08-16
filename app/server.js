@@ -5,6 +5,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import express from 'express';
 import apiRouter from './api/api';
 import bodyParser from 'body-parser';
+import db from './db/db';
 
 const app = express();
 app.use(bodyParser.json());
@@ -34,5 +35,6 @@ app.get('/hello', function (req, res) {
 app.use('/api', apiRouter);
 
 app.listen(3000, function () {
+  db.connect();
   console.log('Listening on 3000');
 });
