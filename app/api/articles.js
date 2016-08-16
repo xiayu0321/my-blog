@@ -10,15 +10,8 @@ router.post('/', function (req, res, next) {
   if (_.isEmpty(data)) {
     res.sendStatus(400);
   } else {
-    console.log('--------- save');
-    console.log(data);
-
     new Article(data).save(err => {
-      console.log('-------- invoke saved');
-      console.log('--- err ---');
-      console.log(err);
       if (err) return next(err);
-      console.log('--- send 201');
       res.sendStatus(201);
     });
   }
